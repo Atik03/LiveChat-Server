@@ -1,4 +1,5 @@
 const dns = require("node:dns");
+
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 const { MongoClient } = require("mongodb");
@@ -13,9 +14,20 @@ const connectDB = async () => {
 
     db = client.db(process.env.MONGODB_DB_NAME);
 
+    // Ensure username remains unique
+    await db.collection("user").createIndex(
+      { username: 1 },
+      {
+        unique: true,
+        sparse: true,
+      },
+    );
+
     console.log("MongoDB connected successfully");
+    console.log("Username unique index ensured");
   } catch (error) {
     console.error("MongoDB connection failed:", error.message);
+
     process.exit(1);
   }
 };
