@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 
 const profileRoutes = require("./routes/profile.routes");
 const userRoutes = require("./routes/user.routes");
+const contactRequestRoutes = require("./routes/contact-request.routes");
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/profile", profileRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/contact-requests", contactRequestRoutes);
 
 /* =========================================
    404 HANDLER
